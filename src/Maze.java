@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.PriorityQueue;
+import java.util.*;
 
 public class Maze {
     int rows;
@@ -79,6 +76,32 @@ public class Maze {
         return path;
     }
 
+    ArrayList<Node> dfs(){
+        Stack<Node> nodeStack = new Stack<>();
+        ArrayList<Node> visited = new ArrayList<>();
+
+        Node startN = new Node(null, start);
+        Node endN = new Node(null, end);
+
+        nodeStack.add(startN);
+        while(!nodeStack.isEmpty()){
+            Node curr = nodeStack.pop();
+            if(curr.equals(endN)){
+                return visited;
+            }else{
+               visited.add(curr);
+               for(Node n : curr.getNeighbors()){
+                   if(isSafeMove(n) && !visited.contains(n)){
+                       nodeStack.add(n);
+                   }
+               }
+            }
+        }
+        return new ArrayList<Node>(0);
+    }
+
+
+
     HashMap<Location, Integer> setDistances(){
         HashMap<Location, Integer> distances = new HashMap<>();
         for(int i =0; i < rows; i++){
@@ -94,6 +117,8 @@ public class Maze {
 
         return distances;
     }
+
+
 
     boolean isSafeMove(Node move){
         return (move.loc.row < rows && move.loc.row >=0)
