@@ -108,5 +108,15 @@ public class Node implements Comparable<Node>{
         return Objects.hash(loc);
     }
 
+    @Override
+    public String toString() {
+        return "Node{" +
+                "parent=" + parent +
+                ", loc=" + loc.toString() +
+                ", g=" + g +
+                ", h=" + h +
+                ", f=" + f +
+                '}';
+    }
 }
 
